@@ -1,0 +1,211 @@
+/* A Global */
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover { text-decoration: none !important; }
+
+/* Colors */
+$white:           #FFFFFF;
+$light-gray:      #F8F8FB;
+$gray:            #DFE6EC;
+$dark-gray:       #939fae;
+$darker-gray:     #536382;
+$green:           #4FBE65;
+$light-blue:      #f5fafc;
+$blue:            #0d4bdc;
+$red:             #dc394a;
+$dark-blue:       #4434EE;
+$light-red:       #F4F8FF;
+$black:           #1a1b1e;
+
+/* Background Colors */
+.b-transparent    { background-color: transparent !important; }
+.b-white          { background-color: $white !important; }
+.b-blue           { background-color: $blue !important; }
+.b-gray           { background-color: $gray !important; }
+.b-light-gray     { background-color: $light-gray !important; }
+.b-light-blue     { background-color: $light-blue !important; }
+.b-light-red      { background-color: $light-red !important; }
+
+/* Border Radius */
+.mtb-round-5 { border-radius: 5px !important; }
+.mtb-round-5-bottom { border-radius: 0 0 5px 5px !important; }
+.mtb-round-10 { border-radius: 10px !important; }
+.mtb-round-20 { border-radius: 20px !important; }
+.mtb-round-30 { border-radius: 30px !important; }
+.mtb-round-40 { border-radius: 40px !important; }
+
+/* Font Colors */
+.f-transparent    { color: transparent !important; }
+.f-dark-blue      { color: $dark-blue !important; }
+.f-blue           { color: $blue !important; }
+.f-green          { color: $green !important; }
+.f-white          { color: $white !important; }
+.f-gray           { color: $gray !important; }
+.f-red            { color: $red !important; }
+.f-dark-gray      { color: $dark-gray !important; }
+.f-darker-gray    { color: $darker-gray !important; }
+.f-black          { color: $black !important; }
+
+/* Display */
+.d-block        { display: block; }
+.d-inline-block { display: inline-block; }
+.d-flex         { display: flex; }
+
+/* DOM Position */
+.p-relative { position: relative !important; }
+.p-absolute { position: absolute !important; }
+
+/* Font Weights */
+.f-light            { font-weight: 300 !important; }
+.f-normal           { font-weight: 400 !important; }
+.f-bold             { font-weight: 600 !important; }
+.f-bold-black       { font-weight: 900 !important; }
+
+/* Heights & Widths */
+.h-100        { height: 100% !important; }
+.w-100        { width: 100% !important; }
+
+/* Margins and Paddings */
+.mtb-mb-none  { margin-bottom: 0 !important; }
+.mtb-mb-5     { margin-bottom: 0.5vw !important; }
+.mtb-mb-10    { margin-bottom: 1vw !important; }
+.mtb-mb-15    { margin-bottom: 1.5vw !important; }
+.mtb-mb-20    { margin-bottom: 2vw !important; }
+.mtb-mb-25    { margin-bottom: 2.5vw !important; }
+.mtb-mb-30    { margin-bottom: 3vw !important; }
+.mtb-mb-40    { margin-bottom: 4vw !important; }
+
+.mtb-mt-none  { margin-top: 0 !important; }
+.mtb-mt-5     { margin-top: 0.5vw !important; }
+.mtb-mt-10    { margin-top: 1vw !important; }
+.mtb-mt-15    { margin-top: 1.5vw !important; }
+.mtb-mt-20    { margin-top: 2vw !important; }
+.mtb-mt-25    { margin-top: 2.5vw !important; }
+.mtb-mt-30    { margin-top: 3vw !important; }
+.mtb-mt-40    { margin-top: 4vw !important; }
+
+.mtb-mr-none  { margin-right: 0 !important; }
+.mtb-mr-5     { margin-right: 0.5vw !important; }
+.mtb-mr-10    { margin-right: 1vw !important; }
+.mtb-mr-15    { margin-right: 1.5vw !important; }
+.mtb-mr-20    { margin-right: 2vw !important; }
+.mtb-mr-25    { margin-right: 2.5vw !important; }
+.mtb-mr-30    { margin-right: 3vw !important; }
+.mtb-mr-40    { margin-right: 4vw !important; }
+
+.mtb-ml-none  { margin-left: 0 !important; }
+.mtb-ml-5     { margin-left: 0.5vw !important; }
+.mtb-ml-10    { margin-left: 1vw !important; }
+.mtb-ml-15    { margin-left: 1.5vw !important; }
+.mtb-ml-20    { margin-left: 2vw !important; }
+.mtb-ml-25    { margin-left: 2.5vw !important; }
+.mtb-ml-30    { margin-left: 3vw !important; }
+.mtb-ml-40    { margin-left: 4vw !important; }
+
+.mtb-mx-none  { margin-left: 0 !important; margin-right: 0 !important; }
+.mtb-mx-5     { margin-left: 0.5vw !important; margin-right: 0.5vw !important; }
+.mtb-mx-10    { margin-left: 1vw !important; margin-right: 1vw !important; }
+.mtb-mx-15    { margin-left: 1.5vw !important; margin-right: 1.5vw !important; }
+.mtb-mx-20    { margin-left: 2vw !important; margin-right: 2vw !important; }
+.mtb-mx-25    { margin-left: 2.5vw !important; margin-right: 2.5vw !important; }
+.mtb-mx-30    { margin-left: 3vw !important; margin-right: 3vw !important; }
+.mtb-mx-40    { margin-left: 4vw !important; margin-right: 4vw !important; }
+
+.mtb-my-none  { margin-top: 0 !important; margin-bottom: 0 !important; }
+.mtb-my-5     { margin-top: 0.5vw !important; margin-bottom: 0.5vw !important; }
+.mtb-my-10    { margin-top: 1vw !important; margin-bottom: 1vw !important; }
+.mtb-my-15    { margin-top: 1.5vw !important; margin-bottom: 1.5vw !important; }
+.mtb-my-20    { margin-top: 2vw !important; margin-bottom: 2vw !important; }
+.mtb-my-25    { margin-top: 2.5vw !important; margin-bottom: 2.5vw !important; }
+.mtb-my-30    { margin-top: 3vw !important; margin-bottom: 3vw !important; }
+.mtb-my-40    { margin-top: 4vw !important; margin-bottom: 4vw !important; }
+
+.mtb-p-none   { padding: 0 !important; }
+.mtb-p-5      { padding: 0.5vw !important; }
+.mtb-p-10     { padding: 1vw !important; }
+.mtb-p-15     { padding: 1.5vw !important; }
+.mtb-p-20     { padding: 2vw !important; }
+.mtb-p-25     { padding: 2.5vw !important; }
+.mtb-p-30     { padding: 3vw !important; }
+.mtb-p-40     { padding: 4vw !important; }
+
+.mtb-pt-none  { padding-top: 0 !important; }
+.mtb-pt-5     { padding-top: 0.5vw !important; }
+.mtb-pt-10    { padding-top: 1vw !important; }
+.mtb-pt-15    { padding-top: 1.5vw !important; }
+.mtb-pt-20    { padding-top: 2vw !important; }
+.mtb-pt-25    { padding-top: 2.5vw !important; }
+.mtb-pt-30    { padding-top: 3vw !important; }
+.mtb-pt-40    { padding-top: 4vw !important; }
+
+.mtb-pr-none  { padding-right: 0 !important; }
+.mtb-pr-5     { padding-right: 0.5vw !important; }
+.mtb-pr-10    { padding-right: 1vw !important; }
+.mtb-pr-15    { padding-right: 1.5vw !important; }
+.mtb-pr-20    { padding-right: 2vw !important; }
+.mtb-pr-25    { padding-right: 2.5vw !important; }
+.mtb-pr-30    { padding-right: 3vw !important; }
+.mtb-pr-40    { padding-right: 4vw !important; }
+
+.mtb-pb-none  { padding-bottom: 0 !important; }
+.mtb-pb-5     { padding-bottom: 0.5vw !important; }
+.mtb-pb-10    { padding-bottom: 1vw !important; }
+.mtb-pb-15    { padding-bottom: 1.5vw !important; }
+.mtb-pb-20    { padding-bottom: 2vw !important; }
+.mtb-pb-25    { padding-bottom: 2.5vw !important; }
+.mtb-pb-30    { padding-bottom: 3vw !important; }
+.mtb-pb-40    { padding-bottom: 4vw !important; }
+
+.mtb-pl-none  { padding-left: 0 !important; }
+.mtb-pl-5     { padding-left: 0.5vw !important; }
+.mtb-pl-10    { padding-left: 1vw !important; }
+.mtb-pl-15    { padding-left: 1.5vw !important; }
+.mtb-pl-20    { padding-left: 2vw !important; }
+.mtb-pl-25    { padding-left: 2.5vw !important; }
+.mtb-pl-30    { padding-left: 3vw !important; }
+.mtb-pl-40    { padding-left: 4vw !important; }
+
+.mtb-px-none  { padding-left: 0 !important; padding-right: 0 !important; }
+.mtb-px-5     { padding-left: 0.5vw !important; padding-right: 0.5vw !important; }
+.mtb-px-10    { padding-left: 1vw !important; padding-right: 1vw !important; }
+.mtb-px-15    { padding-left: 1.5vw !important; padding-right: 1.5vw !important; }
+.mtb-px-20    { padding-left: 2vw !important; padding-right: 2vw !important; }
+.mtb-px-25    { padding-left: 2.5vw !important; padding-right: 2.5vw !important; }
+.mtb-px-30    { padding-left: 3vw !important; padding-right: 3vw !important; }
+.mtb-px-40    { padding-left: 4vw !important; padding-right: 4vw !important; }
+
+.mtb-py-none  { padding-top: 0 !important; padding-bottom: 0 !important; }
+.mtb-py-5     { padding-top: 0.5vw !important; padding-bottom: 0.5vw !important; }
+.mtb-py-10    { padding-top: 1vw !important; padding-bottom: 1vw !important; }
+.mtb-py-15    { padding-top: 1.5vw !important; padding-bottom: 1.5vw !important; }
+.mtb-py-20    { padding-top: 2vw !important; padding-bottom: 2vw !important; }
+.mtb-py-25    { padding-top: 2.5vw !important; padding-bottom: 2.5vw !important; }
+.mtb-py-30    { padding-top: 3vw !important; padding-bottom: 3vw !important; }
+.mtb-py-40    { padding-top: 4vw !important; padding-bottom: 4vw !important; }
+
+/* Links */
+.mtb-underline-none:hover { text-decoration: none !important; }
+.mtb-underline:hover { text-decoration: underline !important; }
+
+/* Text Alignment */
+.p-align-left             { text-align: left !important; }
+.p-align-left-2-right     { text-align: left !important; }
+.p-align-left-2-center    { text-align: left !important; }
+.p-align-right            { text-align: right !important; }
+.p-align-right-2-left     { text-align: right !important; }
+.p-align-right-2-center   { text-align: right !important; }
+.p-align-center           { text-align: center !important; }
+.p-align-center-2-left    { text-align: center !important; }
+.p-align-center-2-right   { text-align: center !important; }
+
+@media (max-width: 959px) {
+  .p-align-left-2-right   { text-align: right !important; }
+  .p-align-left-2-center  { text-align: center !important; }
+  .p-align-right-2-left   { text-align: left !important; }
+  .p-align-right-2-center { text-align: center !important; }
+  .p-align-center-2-left  { text-align: left !important; }
+  .p-align-center-2-right { text-align: right !important; }
+}
+
+/* Z-index */
+.mtb-z-0    { z-index: 0 !important; }
+.mtb-z-10   { z-index: 10 !important; }
+
