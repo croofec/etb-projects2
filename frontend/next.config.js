@@ -1,5 +1,5 @@
 const withPlugins = require('next-compose-plugins');
-
+const path = require("path")
 let nextConfig = {
   compress: true,
   poweredByHeader: false,
@@ -24,6 +24,7 @@ module.exports = withPlugins(
               },
             },
           });
+          config.resolve.modules.push(path.resolve('./'))
           return config;
         },
       },
