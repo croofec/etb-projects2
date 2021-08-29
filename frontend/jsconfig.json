@@ -2,7 +2,27 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["components/*"]
+      "@components/*": [
+        "components/*"
+      ],
+      "@theme/*": [
+        "theme/*"
+      ],
+      "@redux/*": [
+        "redux/*"
+      ],
+      "@connectors/*": [
+        "connectors/*"
+      ],
+      "@hooks/*": [
+        "hooks/*"
+      ],
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@config/*": [
+        "config/*"
+      ]
     }
   }
 }

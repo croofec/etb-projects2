@@ -1,12 +1,28 @@
 import React from 'react';
 import Head from 'next/head';
-import { ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '../theme/theme';
+import { Provider } from 'react-redux';
+import { SnackbarProvider } from 'notistack';
 
-import '../styles/styles.scss'
+import { Web3ReactProvider } from '@web3-react/core';
+
+import { Web3Provider } from '@ethersproject/providers';
+import { ThemeProvider } from '@material-ui/core/styles';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+import Web3Wrapper from '@components/Web3Wrapper';
+import store from '@redux/store';
+
+import theme from '@theme/theme';
+import '../styles/styles.scss';
 
 function MyApp({ Component, pageProps }) {
+
+  function getLibrary(provider) {
+    const library = new Web3Provider(provider);
+    library.pollingInterval = 12000;
+    return library;
+  }
 
   React.useEffect(() => {
     const jssStyles = document.querySelector('#jss-server-side');
@@ -18,13 +34,21 @@ function MyApp({ Component, pageProps }) {
   return <React.Fragment>
     <Head>
       <title>ETB - Staking</title>
-      <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+      <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
     </Head>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Component {...pageProps} />
-    </ThemeProvider>
-  </React.Fragment>
+    <Provider store={store}>
+      <SnackbarProvider maxSnack={3} SnackbarProps={{ autoHideDuration: 4000 }}>
+        <ThemeProvider theme={theme}>
+          <Web3ReactProvider getLibrary={getLibrary}>
+            <CssBaseline/>
+            <Web3Wrapper>
+              <Component {...pageProps} />
+            </Web3Wrapper>
+          </Web3ReactProvider>
+        </ThemeProvider>
+      </SnackbarProvider>
+    </Provider>
+  </React.Fragment>;
 }
 
-export default MyApp
+export default MyApp;

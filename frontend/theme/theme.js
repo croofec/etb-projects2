@@ -16,12 +16,12 @@ const theme = createTheme({
   borderRadius: 1,
   palette: {
     primary: {
-      main: '#0d4bdc',
+      main: '#33D3D2',
       dark: '#142561',
       contrastText: '#FFFFFF',
     },
     secondary: {
-      main: '#d463e4',
+      main: '#33D3D2',
       contrastText: '#FFFFFF',
     },
     text: {

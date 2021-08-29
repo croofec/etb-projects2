@@ -15,7 +15,7 @@ const Staking = () => {
         <Card className={'w-100 mtb-px-30 mtb-py-20 mtb-round-10 p-relative mtb-z-10'} elevation={5}>
           <Grid container spacing={2}>
             <Grid item xs={6} container justifyContent={'flex-end'} className={'mtb-p-15'}>
-              <Typography variant={'h8'} paragraph>Your balance:1232 LP</Typography>
+              <Typography variant={'h7'} paragraph>Your balance:1232 LP</Typography>
               <TextField
                 InputProps={{
                   inputProps: {
