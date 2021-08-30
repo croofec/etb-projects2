@@ -1,0 +1,21 @@
+{
+  "name": "etb-project2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "croofec",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.3.1",
+    "@truffle/hdwallet-provider": "^1.5.0",
+    "dotenv": "^10.0.0",
+    "truffle-privatekey-provider": "^1.5.0",
+    "web3": "^1.5.2",
+    "web3-utils": "^1.5.2"
+  },
+  "devDependencies": {
+    "@openzeppelin/test-environment": "^0.1.9",
+    "@openzeppelin/test-helpers": "^0.5.13",
+    "truffle-plugin-verify": "^0.5.12"
+  }
+}
