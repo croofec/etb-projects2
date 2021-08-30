@@ -6,7 +6,7 @@ import "./utils/IBEP20/IBEP20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract SampleToken is IBEP20, Ownable {
+contract BEP20Token is IBEP20, Ownable {
   using SafeMath for uint256;
 
   mapping (address => uint256) private _balances;
