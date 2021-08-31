@@ -48,7 +48,9 @@ const AdminNewOwner = () => {
           <Typography variant={'h5'} paragraph>Set New Owner</Typography>
         </Grid>
         <Grid item xs={10}>
-          <TextField fullWidth label="New Owner Address" value={value} onChange={(e) => setValue(e.target.value)} variant="outlined"/>
+          <TextField fullWidth label="New Owner Address"
+                     value={value}
+                     onChange={(e) => setValue(e.target.value)} variant="outlined"/>
         </Grid>
         <Grid item xs={2}>
           <Tooltip title={'Set new owner address'}>

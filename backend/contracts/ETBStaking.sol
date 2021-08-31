@@ -155,6 +155,7 @@ contract ETBStaking is Ownable {
     }
 
     function setRewardToken(address rewardToken) external onlyOwner {
+        require(rewardToken != address(0), 'ETBStaking: supportedToken can\'t be zero address');
         _rewardToken = rewardToken;
     }
 
