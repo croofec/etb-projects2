@@ -7,8 +7,11 @@ import Button from '@material-ui/core/Button';
 import React, { useEffect, useState } from 'react';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import moment from 'moment';
+import { useSupportedNetwork } from '@hooks/chain';
 
 const AdminStakingStages = () => {
+
+  const isSupportedNetwork = useSupportedNetwork();
 
   const [reward, setReward] = useState(1000);
   const [startDate, setStartDate] = useState(moment().add(0, 'days').startOf('day').toDate());
@@ -60,6 +63,7 @@ const AdminStakingStages = () => {
             color="primary"
             variant="contained"
             disableElevation={true}
+            disabled={!isSupportedNetwork}
             className={'mtb-mt-10'}
             size={'medium'}
           >

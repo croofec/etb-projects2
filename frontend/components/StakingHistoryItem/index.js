@@ -2,8 +2,12 @@ import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
+import { useSupportedNetwork } from '@hooks/chain';
 
 const StakingHistoryItem = () =>{
+
+  const isSupportedNetwork = useSupportedNetwork();
+
   return <Grid item xs={12} className={'mtb-mb-10'}>
     <Card className={'d-flex mtb-p-10 p-align-center'}>
       <Grid container alignItems={'center'}>
@@ -17,6 +21,7 @@ const StakingHistoryItem = () =>{
             <Button
               color="primary"
               variant="contained"
+              disabled={!isSupportedNetwork}
               disableElevation={true}
               size={'small'}
             >

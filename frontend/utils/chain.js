@@ -1,4 +1,4 @@
-import Web3 from "web3";
+import Web3 from 'web3';
 
 export const formatAccount = (account) => {
   return `${account.substring(0, 6)}...${account.substring(account.length - 4)}`;
@@ -26,3 +26,7 @@ export const loadContract = (contract, chainId) => {
     return null;
   }
 };
+
+export function isChainSupported(chainId) {
+  return parseInt(process.env.NEXT_PUBLIC_DEFAULT_CHAIN_ID) === chainId;
+}

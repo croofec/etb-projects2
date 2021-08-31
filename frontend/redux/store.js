@@ -16,6 +16,7 @@ export default configureStore({
       ],
       ignoredPaths: [
         "blockChain/setChainConnector",
+        "blockChain.balance",
       ],
     },
   }),
