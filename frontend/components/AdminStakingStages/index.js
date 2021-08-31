@@ -80,14 +80,15 @@ const AdminStakingStages = () => {
         ).send({
           from: account,
         });
-        setStages([...stages, {
+        setStages([{
+          stage: stages.length + 1,
           reward: reward,
           startDate: moment.utc(startDate).format('yyyy-MM-DD'),
           endDate: moment.utc(endDate).format('yyyy-MM-DD'),
           holders: 0,
           tokens: 0,
-        }]);
-        enqueueSnackbar('Wallet connected', {
+        }, ...stages]);
+        enqueueSnackbar('Success', {
           variant: 'success',
         });
       } catch (e) {

@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract ETBStaking is Ownable {
     using SafeMath for uint256;
 
-    struct StakerInfo {
+    struct HolderInfo {
         uint256 _depositTime;
         uint256 _amount;
     }
@@ -48,7 +48,7 @@ contract ETBStaking is Ownable {
 
     StakingStage[] private _stakingStages;
 
-    mapping(uint256 => mapping(address => StakerInfo)) _stagesStakeHolders;
+    mapping(uint256 => mapping(address => HolderInfo)) _stagesStakeHolders;
 
     constructor(
         address tokenForStaking,
@@ -73,7 +73,7 @@ contract ETBStaking is Ownable {
             _startTime : startTime,
             _endTime : endTime,
             _tokens : 0,
-            _holders: 0
+            _holders : 0
             }));
 
         emit StakingStageCreated(
@@ -85,11 +85,12 @@ contract ETBStaking is Ownable {
     }
 
     function stake(uint256 stage, uint256 value) external {
+        require(value > 0, 'ETBStaking: stake must be > 0');
         require(stage < _stakingStages.length, 'ETBStaking: wrong number of stage');
         require(block.timestamp > _stakingStages[stage]._startTime, 'ETBStaking: staking not stared yet');
         require(block.timestamp <= _stakingStages[stage]._endTime, 'ETBStaking: staking ended');
         require(IBEP20(_tokenForStaking).balanceOf(msg.sender) >= value, 'ETBStaking: not enough required BEP20 token');
-        StakerInfo storage stakeHolder = _stagesStakeHolders[stage][msg.sender];
+        HolderInfo storage stakeHolder = _stagesStakeHolders[stage][msg.sender];
         require(stakeHolder._depositTime == 0, "ETBStaking: User already in staking pool");
 
         IBEP20(_tokenForStaking).transferFrom(
@@ -102,6 +103,7 @@ contract ETBStaking is Ownable {
         stakeHolder._amount += value;
 
         _stakingStages[stage]._holders += 1;
+        _stakingStages[stage]._tokens += value;
 
         emit Stake({
             _stage : stage,
@@ -115,7 +117,7 @@ contract ETBStaking is Ownable {
         require(stage < _stakingStages.length, 'ETBStaking: wrong number of stage');
         require(block.timestamp > _stakingStages[stage]._startTime, 'ETBStaking: staking not stared yet');
         require(IBEP20(_rewardToken).balanceOf(address(this)) >= _calculateReward(stage, msg.sender), 'ETBStaking: not enough balance for reward BEP20 token');
-        StakerInfo storage stakeHolder = _stagesStakeHolders[stage][msg.sender];
+        HolderInfo storage stakeHolder = _stagesStakeHolders[stage][msg.sender];
         require(stakeHolder._depositTime > 0, "ETBStaking: Not stakeholder");
         require(stakeHolder._amount > 0, "ETBStaking: User already withdrawn");
 
@@ -127,9 +129,11 @@ contract ETBStaking is Ownable {
 
         uint256 depositTime = stakeHolder._depositTime;
 
+        _stakingStages[stage]._holders -= 1;
+        _stakingStages[stage]._tokens -= stakeHolder._amount;
+
         stakeHolder._depositTime = 0;
         stakeHolder._amount = 0;
-        _stakingStages[stage]._holders -= 1;
 
         emit Withdraw({
             _stage : stage,
@@ -140,15 +144,15 @@ contract ETBStaking is Ownable {
             });
     }
 
-    function getReward(uint256 stage, address staker) external view returns (uint256) {
-        return _calculateReward(stage, staker);
+    function getReward(uint256 stage, address holderAddress) external view returns (uint256) {
+        return _calculateReward(stage, holderAddress);
     }
 
-    function _calculateReward(uint256 stage, address stakerAddress) internal view returns (uint256) {
+    function _calculateReward(uint256 stage, address holderAddress) internal view returns (uint256) {
         require(stage < _stakingStages.length, 'ETBStaking: wrong number of stage');
-        StakerInfo storage staker = _stagesStakeHolders[stage][stakerAddress];
+        HolderInfo storage holder = _stagesStakeHolders[stage][holderAddress];
         //FIXME
-        return 0;
+        return 777777;
     }
 
     function isStackingStageIsActive(uint256 stage) external view returns (bool) {
@@ -168,6 +172,16 @@ contract ETBStaking is Ownable {
         _stakingStages[stage]._endTime,
         _stakingStages[stage]._tokens,
         _stakingStages[stage]._holders
+        );
+    }
+
+    function getHolderInfo(uint256 stage, address holderAddress) external view returns (uint256, uint256, uint256) {
+        require(stage < _stakingStages.length, 'ETBStaking: wrong number of stage');
+        HolderInfo storage holder = _stagesStakeHolders[stage][holderAddress];
+        return (
+        holder._depositTime,
+        holder._amount,
+        _calculateReward(stage, holderAddress)
         );
     }
 

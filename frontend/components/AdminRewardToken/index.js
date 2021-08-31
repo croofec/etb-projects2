@@ -26,7 +26,7 @@ const AdminRewardToken = () => {
         await stakingContract.methods.setRewardToken(value).send({
           from: account,
         });
-        enqueueSnackbar('Wallet connected', {
+        enqueueSnackbar('Success', {
           variant: 'success',
         });
         setValue('');

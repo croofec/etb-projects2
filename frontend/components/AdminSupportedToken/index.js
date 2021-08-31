@@ -26,7 +26,7 @@ const AdminSupportedToken = () => {
         await stakingContract.methods.setSupportedToken(value).send({
           from: account,
         });
-        enqueueSnackbar('Wallet connected', {
+        enqueueSnackbar('Success', {
           variant: 'success',
         });
         setValue('');

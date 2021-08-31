@@ -25,7 +25,7 @@ const AdminNewOwner = () => {
         await stakingContract.methods.transferOwnership(value).send({
           from: account,
         });
-        enqueueSnackbar('Wallet connected', {
+        enqueueSnackbar('Success', {
           variant: 'success',
         });
         setValue('');

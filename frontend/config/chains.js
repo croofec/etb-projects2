@@ -13,11 +13,11 @@ export const CHAINS = {
   },
   97: {
     name: 'BSC Testnet',
-    currency: 'BSC',
+    currency: 'tBSC',
   },
   1337: {
     name: 'Ganache',
-    currency: 'ETC',
+    currency: 'ETB',
   },
 };
 

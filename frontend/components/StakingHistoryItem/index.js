@@ -3,19 +3,47 @@ import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import { useSupportedNetwork } from '@hooks/chain';
+import { useSnackbar } from 'notistack';
+import { useWeb3React } from '@web3-react/core';
+import { ETBStaking } from '@utils/contracts';
 
-const StakingHistoryItem = () =>{
+const StakingHistoryItem = ({ data }) => {
 
   const isSupportedNetwork = useSupportedNetwork();
+
+  const { enqueueSnackbar } = useSnackbar();
+  const { chainId, account } = useWeb3React();
+
+  const stakingContract = ETBStaking(chainId);
+
+  const handleWithdraw = async () => {
+    if (stakingContract) {
+      try {
+        await stakingContract.methods.withdraw(data.stage).send({
+          from: account,
+        });
+        enqueueSnackbar('Success', {
+          variant: 'success',
+        });
+      } catch (e) {
+        enqueueSnackbar(e.message, {
+          variant: 'error',
+        });
+      }
+    } else {
+      enqueueSnackbar('Not found deployed contract', {
+        variant: 'error',
+      });
+    }
+  };
 
   return <Grid item xs={12} className={'mtb-mb-10'}>
     <Card className={'d-flex mtb-p-10 p-align-center'}>
       <Grid container alignItems={'center'}>
-        <Grid item xs={2}>1. Phase: 1</Grid>
-        <Grid item xs={2}>2021-01-01</Grid>
-        <Grid item xs={2}>Token: 100</Grid>
-        <Grid item xs={2}>Reward: 0.94ETB</Grid>
-        <Grid item xs={2}>Active</Grid>
+        <Grid item xs={2}>1. Phase: {data.stage + 1}</Grid>
+        <Grid item xs={2}>{data.date}</Grid>
+        <Grid item xs={3}>Token: {data.value}</Grid>
+        <Grid item xs={3}>Reward: {data.reward}</Grid>
         <Grid item xs={2} className={'p-align-right '}>
           <Tooltip title={'Withdraw Reward'}>
             <Button
@@ -24,6 +52,7 @@ const StakingHistoryItem = () =>{
               disabled={!isSupportedNetwork}
               disableElevation={true}
               size={'small'}
+              onClick={handleWithdraw}
             >
               Withdraw
             </Button>
@@ -31,6 +60,6 @@ const StakingHistoryItem = () =>{
         </Grid>
       </Grid>
     </Card>
-  </Grid>
+  </Grid>;
 };
-export default StakingHistoryItem
+export default StakingHistoryItem;
