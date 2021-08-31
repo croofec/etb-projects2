@@ -15,8 +15,10 @@ import store from '@redux/store';
 import theme from '@theme/theme';
 import MomentUtils from '@date-io/moment';
 
-import moment from 'moment';
+import moment from 'moment-timezone';
 import '../styles/styles.scss';
+
+moment.tz.setDefault("UTC");
 
 function MyApp({ Component, pageProps }) {
 

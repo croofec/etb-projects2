@@ -18,7 +18,8 @@ contract ETBStaking is Ownable {
         uint256 _reward;
         uint256 _startTime;
         uint256 _endTime;
-        uint256 _duration;
+        uint256 _tokens;
+        uint256 _holders;
     }
 
     event Stake(
@@ -29,8 +30,9 @@ contract ETBStaking is Ownable {
 
     event StakingStageCreated(
         uint256 indexed _stage,
-        uint256 indexed _reward,
-        uint256 indexed _duration
+        uint256 indexed _startTime,
+        uint256 indexed _endTime,
+        uint256 _reward
     );
 
     event Withdraw(
@@ -55,9 +57,9 @@ contract ETBStaking is Ownable {
         _rewardToken = rewardToken;
     }
 
-    function addStakeStage(uint256 reward, uint256 duration) external onlyOwner {
+    function addStakeStage(uint256 reward, uint256 startTime, uint256 endTime) external onlyOwner {
         require(reward > 0, "ETBStaking: reward must be > 0");
-        require(duration > 0, "ETBStaking: duration must be > 0");
+        require(endTime > startTime, "ETBStaking: startTime must be less then endTIme");
         require(IBEP20(_rewardToken).balanceOf(msg.sender) >= reward, 'ETBStaking: not enough required BEP20 token');
 
         IBEP20(_rewardToken).transferFrom(
@@ -68,15 +70,17 @@ contract ETBStaking is Ownable {
 
         _stakingStages.push(StakingStage({
             _reward : reward,
-            _startTime : block.timestamp,
-            _endTime : block.timestamp + duration,
-            _duration : duration
+            _startTime : startTime,
+            _endTime : endTime,
+            _tokens : 0,
+            _holders: 0
             }));
 
         emit StakingStageCreated(
             _stakingStages.length,
-            reward,
-            duration
+            startTime,
+            endTime,
+            reward
         );
     }
 
@@ -85,7 +89,6 @@ contract ETBStaking is Ownable {
         require(block.timestamp > _stakingStages[stage]._startTime, 'ETBStaking: staking not stared yet');
         require(block.timestamp <= _stakingStages[stage]._endTime, 'ETBStaking: staking ended');
         require(IBEP20(_tokenForStaking).balanceOf(msg.sender) >= value, 'ETBStaking: not enough required BEP20 token');
-
         StakerInfo storage stakeHolder = _stagesStakeHolders[stage][msg.sender];
         require(stakeHolder._depositTime == 0, "ETBStaking: User already in staking pool");
 
@@ -97,6 +100,8 @@ contract ETBStaking is Ownable {
 
         stakeHolder._depositTime = block.timestamp;
         stakeHolder._amount += value;
+
+        _stakingStages[stage]._holders += 1;
 
         emit Stake({
             _stage : stage,
@@ -124,6 +129,7 @@ contract ETBStaking is Ownable {
 
         stakeHolder._depositTime = 0;
         stakeHolder._amount = 0;
+        _stakingStages[stage]._holders -= 1;
 
         emit Withdraw({
             _stage : stage,
@@ -152,6 +158,17 @@ contract ETBStaking is Ownable {
 
     function getStackingStagesLength() external view returns (uint256) {
         return _stakingStages.length;
+    }
+
+    function getStackingStage(uint256 stage) external view returns (uint256, uint256, uint256, uint256, uint256) {
+        require(stage < _stakingStages.length, 'ETBStaking: wrong number of stage');
+        return (
+        _stakingStages[stage]._reward,
+        _stakingStages[stage]._startTime,
+        _stakingStages[stage]._endTime,
+        _stakingStages[stage]._tokens,
+        _stakingStages[stage]._holders
+        );
     }
 
     function setRewardToken(address rewardToken) external onlyOwner {

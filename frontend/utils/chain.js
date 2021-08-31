@@ -1,5 +1,8 @@
 import Web3 from 'web3';
 
+export const ALLOWANCE_MAX =
+  "0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
+
 export const formatAccount = (account) => {
   return `${account.substring(0, 6)}...${account.substring(account.length - 4)}`;
 };

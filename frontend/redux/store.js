@@ -13,6 +13,7 @@ export default configureStore({
     serializableCheck: {
       ignoredActions: [
         "blockChain/setChainConnector",
+        "blockChain/setChainBalance",
       ],
       ignoredPaths: [
         "blockChain/setChainConnector",
