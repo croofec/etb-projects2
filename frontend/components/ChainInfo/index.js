@@ -16,13 +16,14 @@ const ChainInfo = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleConnectToWallet = async () => {
-    dispatch(setChainConnector(injected));
     try {
+      // dispatch(setChainConnector(injected));
       await activate(injected);
       enqueueSnackbar('Wallet connected', {
         variant: 'success',
       });
     } catch (e) {
+      console.error(e);
       enqueueSnackbar(e.message, {
         variant: 'error',
       });

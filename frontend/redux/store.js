@@ -12,10 +12,10 @@ export default configureStore({
   middleware: getDefaultMiddleware({
     serializableCheck: {
       ignoredActions: [
-        "blockChain/setChainBalance",
+        "blockChain/setChainConnector",
       ],
       ignoredPaths: [
-        "blockChain/setChainBalance",
+        "blockChain/setChainConnector",
       ],
     },
   }),

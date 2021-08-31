@@ -9,7 +9,7 @@ import Header from '@components/Header';
 import UnsupportedChain from '@components/UnsupportedChain';
 
 const Index = () => {
-  return (<><Container maxWidth="xl">
+  return (<Container maxWidth="xl">
     <Box flexGrow={1}>
       <Header/>
     </Box>
@@ -23,9 +23,7 @@ const Index = () => {
         </Container>
       </Box>
     </Grid>
-  </Container>
-
-  </>);
+  </Container>);
 };
 
 export default Index;

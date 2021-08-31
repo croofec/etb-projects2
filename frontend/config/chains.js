@@ -15,6 +15,10 @@ export const CHAINS = {
     name: 'BSC Testnet',
     currency: 'BSC',
   },
+  1337: {
+    name: 'Ganache',
+    currency: 'ETC',
+  },
 };
 
 export const MAIN_NETS = [1, 56];
