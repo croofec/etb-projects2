@@ -13,6 +13,8 @@ import Web3 from 'web3';
 import Card from '@material-ui/core/Card';
 import { BigNumber } from 'ethers';
 import { ALLOWANCE_MAX } from '@utils/chain';
+import { selectStakingLoading, setStakingLoading } from '@redux/slices/staking';
+import { useDispatch } from 'react-redux';
 
 const TokenFaucetComponent = () => {
 
@@ -20,6 +22,7 @@ const TokenFaucetComponent = () => {
 
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
+  const dispatch = useDispatch()
 
   const [value, setValue] = useState('');
 
@@ -33,6 +36,7 @@ const TokenFaucetComponent = () => {
   const handleClick = async () => {
     if (tokenFaucetContract) {
       try {
+        dispatch(setStakingLoading(true));
         const isAllowed = await token.methods
           .allowance(account, tokenFaucetContract._address)
           .call();
@@ -50,8 +54,11 @@ const TokenFaucetComponent = () => {
           variant: 'success',
         });
         setValue('');
+        dispatch(setStakingLoading(false));
         router.reload(window.location.pathname);
       } catch (e) {
+        console.error(e)
+        dispatch(setStakingLoading(false));
         enqueueSnackbar(e.message, {
           variant: 'error',
         });

@@ -7,6 +7,8 @@ import { useSnackbar } from 'notistack';
 import { useWeb3React } from '@web3-react/core';
 import { ETBStaking } from '@utils/contracts';
 import { useRouter } from 'next/router';
+import { selectStakingLoading, setStakingLoading } from '@redux/slices/staking';
+import { useDispatch } from 'react-redux';
 
 const StakingHistoryItem = ({ data }) => {
 
@@ -14,6 +16,7 @@ const StakingHistoryItem = ({ data }) => {
 
   const { enqueueSnackbar } = useSnackbar();
   const { chainId, account } = useWeb3React();
+  const dispatch = useDispatch();
   const route = useRouter();
 
   const stakingContract = ETBStaking(chainId);
@@ -21,14 +24,18 @@ const StakingHistoryItem = ({ data }) => {
   const handleWithdraw = async () => {
     if (stakingContract) {
       try {
+        dispatch(setStakingLoading(true));
         await stakingContract.methods.withdraw(data.stage).send({
           from: account,
         });
         enqueueSnackbar('Success', {
           variant: 'success',
         });
+        dispatch(setStakingLoading(false));
         route.reload(window.location.pathname);
       } catch (e) {
+        console.error(e);
+        dispatch(setStakingLoading(false));
         enqueueSnackbar(e.message, {
           variant: 'error',
         });

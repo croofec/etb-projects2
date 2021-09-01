@@ -8,8 +8,14 @@ import StakingInfo from '@components/StakingInfo';
 import Header from '@components/Header';
 import UnsupportedChain from '@components/UnsupportedChain';
 import TokenFaucet from '@components/TokenFaucet';
+import { useSelector } from 'react-redux';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { selectStakingLoading } from '@redux/slices/staking';
 
 const Index = () => {
+
+  const isLoading = useSelector(selectStakingLoading)
+
   return (<Container maxWidth="xl">
     <Box flexGrow={1}>
       <Header/>
@@ -19,6 +25,7 @@ const Index = () => {
         <Container maxWidth="sm">
           <UnsupportedChain/>
           <StakingInfo/>
+          {isLoading && <LinearProgress color="secondary" />}
           <Staking/>
           <TokenFaucet/>
           <StakingHistory/>

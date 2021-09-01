@@ -13,6 +13,8 @@ import Web3 from 'web3';
 import { BigNumber } from 'ethers';
 import { ALLOWANCE_MAX } from '@utils/chain';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { selectStakingLoading, setStakingLoading } from '@redux/slices/staking';
 
 const Staking = () => {
 
@@ -30,6 +32,8 @@ const Staking = () => {
   const [balance, setBalance] = useState(0);
   const [stages, setStages] = useState(0);
 
+  const dispatch = useDispatch();
+
   useEffect(async () => {
     if (token && stakingContract) {
       const balance = await token.methods.balanceOf(account).call();
@@ -43,8 +47,10 @@ const Staking = () => {
 
   const handleMax = async () => {
     if (token) {
+      dispatch(setStakingLoading(true))
       const balance = await token.methods.balanceOf(account).call();
       setAmount(Web3.utils.fromWei(String(balance), 'ether'));
+      dispatch(setStakingLoading(false))
     }
   };
 
@@ -53,6 +59,7 @@ const Staking = () => {
   const handleStake = async () => {
     if (stakingContract) {
       try {
+        dispatch(setStakingLoading(true));
         const stageCount = await stakingContract.methods.getStackingStagesLength().call();
         const isAllowed = await token.methods
           .allowance(account, stakingContract._address)
@@ -77,7 +84,10 @@ const Staking = () => {
         enqueueSnackbar('Success', {
           variant: 'success',
         });
+        dispatch(setStakingLoading(false));
       } catch (e) {
+        console.error(e);
+        dispatch(setStakingLoading(false));
         enqueueSnackbar(e.message, {
           variant: 'error',
         });
