@@ -14,8 +14,10 @@ const UnsupportedChain = () => {
   const classes = useStyles();
   const { chainId, active } = useWeb3React();
 
+  console.log(process.env.NEXT_PUBLIC_DEFAULT_CHAIN_ID);
+
   return <>{active && !isChainSupported(chainId) && <Box className={classes.unsupportedChain}>
-    Unsupported Chain! Supported {CHAINS[process.env.NEXT_PUBLIC_DEFAULT_CHAIN_ID].name} network.
+    Unsupported Chain! Supported {CHAINS.hasOwnProperty(chainId) && CHAINS[process.env.NEXT_PUBLIC_DEFAULT_CHAIN_ID].name} network.
   </Box>}</>;
 };
 

@@ -19,10 +19,10 @@ const AccountInfo = () => {
 
   return <Box display="flex" alignItems={'center'}>
     <Box m={2}>
-      {!(MAIN_NETS.indexOf(chainId) !== -1) && <Chip label={CHAINS[chainId].name}/>}
+      {CHAINS.hasOwnProperty(chainId) && <Chip label={CHAINS[chainId].name}/>}
     </Box>
     <Box m={2}>
-      {`${formatWei(balance)} ${CHAINS[chainId].currency}`}
+      {`${formatWei(balance)} ${CHAINS.hasOwnProperty(chainId) && CHAINS[chainId].currency}`}
     </Box>
     <Box m={2}>
       <Button variant="outlined" color="secondary" endIcon={<AddressesIdentIcon account={account}/>} onClick={() => deactivate()}>
