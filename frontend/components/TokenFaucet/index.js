@@ -7,10 +7,12 @@ import Button from '@material-ui/core/Button';
 import { useSupportedNetwork } from '@hooks/chain';
 import { useSnackbar } from 'notistack';
 import { useWeb3React } from '@web3-react/core';
-import { BEP20TokenFaucet } from '@utils/contracts';
+import { BEP20Token, BEP20TokenFaucet } from '@utils/contracts';
 import { useRouter } from 'next/router';
 import Web3 from 'web3';
 import Card from '@material-ui/core/Card';
+import { BigNumber } from 'ethers';
+import { ALLOWANCE_MAX } from '@utils/chain';
 
 const TokenFaucetComponent = () => {
 
@@ -26,10 +28,21 @@ const TokenFaucetComponent = () => {
   const [balance, setBalance] = useState(0);
 
   const tokenFaucetContract = BEP20TokenFaucet(chainId);
+  const token = BEP20Token(chainId);
 
   const handleClick = async () => {
     if (tokenFaucetContract) {
       try {
+        const isAllowed = await token.methods
+          .allowance(account, tokenFaucetContract._address)
+          .call();
+
+        if (BigNumber.from(isAllowed).eq(BigNumber.from(0))) {
+          await token.methods.approve(tokenFaucetContract._address, ALLOWANCE_MAX).send({
+            from: account,
+          });
+        }
+
         await tokenFaucetContract.methods.faucet(value, Web3.utils.toWei(String(100), 'ether')).send({
           from: account,
         });
@@ -59,7 +72,7 @@ const TokenFaucetComponent = () => {
 
   return (
     <Card className={'w-100 mtb-px-30 mtb-py-20 mtb-round-10 p-relative mtb-z-10 mtb-mt-10'} elevation={5}>
-      <Grid container>
+      <Grid container justifyContent={'center'} alignItems={'center'}>
         <Grid item xs={12}>
           <Typography component={'h1'} variant={'h3'} className={' mtb-mb-10'}>Faucet</Typography>
         </Grid>
@@ -68,7 +81,7 @@ const TokenFaucetComponent = () => {
                      onChange={(e) => setValue(e.target.value)}
                      variant="outlined"/>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={2} className={'mtb-pl-10 mtb-mb-10'}>
           <Tooltip title={'Set reward token address'}>
             <Button
               color="primary"

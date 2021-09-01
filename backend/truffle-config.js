@@ -56,8 +56,8 @@ module.exports = {
     testnet: {
       provider: () => new PrivateKeyProvider(process.env.PRIVATE_KEY, `https://data-seed-prebsc-1-s1.binance.org:8545`),
       network_id: 97,
-      confirmations: 10,
-      timeoutBlocks: 200,
+      confirmations: 1,
+      timeoutBlocks: 20000,
       skipDryRun: true
     },
     bsc: {

@@ -21,13 +21,15 @@ const StakingInfo = () => {
     if (staking) {
       const stages = await staking.methods.getStackingStagesLength().call();
       setCurrentStage(stages);
-      const stageInfo = await staking.methods.getStackingStage(stages - 1).call();
-      setCurrentHolder(stageInfo[4]);
-      setCurrentValue(Web3.utils.fromWei(String(stageInfo[3]), 'ether'));
+      if (stages > 0) {
+        const stageInfo = await staking.methods.getStackingStage(stages - 1).call();
+        setCurrentHolder(stageInfo[4]);
+        setCurrentValue(Web3.utils.fromWei(String(stageInfo[3]), 'ether'));
+      }
     }
   }, [active, chainId]);
 
-  return <>{active && <Grid container>
+  return <>{currentStage > 0 && active && <Grid container>
     <Grid item xs={12}>
       <Typography variant={'h3'} className={'mtb-mt-10 mtb-mb-10'}>Stake</Typography>
     </Grid>

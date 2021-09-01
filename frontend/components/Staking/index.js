@@ -28,11 +28,15 @@ const Staking = () => {
   const token = BEP20Token(chainId);
 
   const [balance, setBalance] = useState(0);
+  const [stages, setStages] = useState(0);
 
   useEffect(async () => {
-    if (token) {
+    if (token && stakingContract) {
       const balance = await token.methods.balanceOf(account).call();
       setBalance(Web3.utils.fromWei(String(balance), 'ether'));
+      const stageCount = await stakingContract.methods.getStackingStagesLength().call();
+      console.log(stageCount);
+      setStages(stageCount)
     }
 
   }, [account, chainId]);
@@ -44,11 +48,12 @@ const Staking = () => {
     }
   };
 
+
+
   const handleStake = async () => {
     if (stakingContract) {
       try {
         const stageCount = await stakingContract.methods.getStackingStagesLength().call();
-
         const isAllowed = await token.methods
           .allowance(account, stakingContract._address)
           .call();
@@ -128,7 +133,7 @@ const Staking = () => {
                 color="primary"
                 fullWidth
                 variant="contained"
-                disabled={!isSupportedNetwork}
+                disabled={!isSupportedNetwork || parseInt(stages) === 0}
                 disableElevation={true}
                 onClick={handleStake}
               >
