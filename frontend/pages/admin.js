@@ -17,7 +17,7 @@ const Admin = () => {
       </Box>
       <Grid container mt={'80px'}>
         <Box display={'flex'} justifyContent={'center'} p={20} width={1}>
-          <Container maxWidth="sm">
+          <Container maxWidth="lg">
             <UnsupportedChain/>
             <Grid item xs={12}>
               <AdminStakingStages/>

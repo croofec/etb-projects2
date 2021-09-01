@@ -133,7 +133,7 @@ const AdminStakingStages = () => {
         />
       </Grid>
       <Grid item xs={3}>
-        <TextField fullWidth label="Reward Value" value={reward} onChange={(e) => setReward(e.value)} variant="outlined"/>
+        <TextField type={'number'} fullWidth label="Reward Value" value={reward} onChange={(e) => setReward(e.target.value)} variant="outlined"/>
         <Typography variant={'h7'}>{`Duration ${duration} days`}</Typography>
       </Grid>
       <Grid item xs={3}>

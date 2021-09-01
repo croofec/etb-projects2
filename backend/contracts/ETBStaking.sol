@@ -4,6 +4,7 @@ pragma solidity ^0.8.7;
 
 import "./utils/IBEP20/IBEP20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/utils/math/Math.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ETBStaking is Ownable {
@@ -20,6 +21,8 @@ contract ETBStaking is Ownable {
         uint256 _endTime;
         uint256 _tokens;
         uint256 _holders;
+        uint256 _balance;
+        uint256 _rewardPerDay;
     }
 
     event Stake(
@@ -46,6 +49,8 @@ contract ETBStaking is Ownable {
     address internal _tokenForStaking;
     address internal _rewardToken;
 
+    uint256 internal _daySeconds = 1 days;
+
     StakingStage[] private _stakingStages;
 
     mapping(uint256 => mapping(address => HolderInfo)) _stagesStakeHolders;
@@ -68,13 +73,18 @@ contract ETBStaking is Ownable {
             reward
         );
 
+        (, uint256 stakingDurationDays) = SafeMath.tryDiv(endTime - startTime, _daySeconds);
+        (, uint256 rewardPerDay) = SafeMath.tryDiv(reward, stakingDurationDays);
         _stakingStages.push(StakingStage({
             _reward : reward,
             _startTime : startTime,
             _endTime : endTime,
             _tokens : 0,
-            _holders : 0
+            _holders : 0,
+            _balance : reward,
+            _rewardPerDay : rewardPerDay
             }));
+
 
         emit StakingStageCreated(
             _stakingStages.length,
@@ -131,6 +141,7 @@ contract ETBStaking is Ownable {
 
         _stakingStages[stage]._holders -= 1;
         _stakingStages[stage]._tokens -= stakeHolder._amount;
+        _stakingStages[stage]._balance -= reward;
 
         stakeHolder._depositTime = 0;
         stakeHolder._amount = 0;
@@ -150,9 +161,24 @@ contract ETBStaking is Ownable {
 
     function _calculateReward(uint256 stage, address holderAddress) internal view returns (uint256) {
         require(stage < _stakingStages.length, 'ETBStaking: wrong number of stage');
-        HolderInfo storage holder = _stagesStakeHolders[stage][holderAddress];
-        //FIXME
-        return 777777;
+
+        HolderInfo storage stakeHolder = _stagesStakeHolders[stage][holderAddress];
+        require(stakeHolder._depositTime > 0, "ETBStaking: Not stakeholder");
+
+        //max end time for reward
+        uint256 current = Math.min(block.timestamp, _stakingStages[stage]._endTime);
+
+        //duration of holding
+        (,uint256  holderDurationDay) = SafeMath.tryDiv(current - stakeHolder._depositTime, _daySeconds);
+        //poolWeight
+        (,uint256  poolWeight) = SafeMath.tryDiv(stakeHolder._amount, _stakingStages[stage]._tokens);
+
+        //calc rewardPerDay * poolWeight
+        (,uint256  rewardRate) = SafeMath.tryMul(_stakingStages[stage]._rewardPerDay, poolWeight);
+        //bonus by days
+        (,uint256  reward) = SafeMath.tryMul(holderDurationDay, rewardRate);
+
+        return reward;
     }
 
     function isStackingStageIsActive(uint256 stage) external view returns (bool) {
