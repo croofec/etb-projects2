@@ -6,6 +6,7 @@ import { useSupportedNetwork } from '@hooks/chain';
 import { useSnackbar } from 'notistack';
 import { useWeb3React } from '@web3-react/core';
 import { ETBStaking } from '@utils/contracts';
+import { useRouter } from 'next/router';
 
 const StakingHistoryItem = ({ data }) => {
 
@@ -13,6 +14,7 @@ const StakingHistoryItem = ({ data }) => {
 
   const { enqueueSnackbar } = useSnackbar();
   const { chainId, account } = useWeb3React();
+  const route = useRouter();
 
   const stakingContract = ETBStaking(chainId);
 
@@ -25,6 +27,7 @@ const StakingHistoryItem = ({ data }) => {
         enqueueSnackbar('Success', {
           variant: 'success',
         });
+        route.reload(window.location.pathname);
       } catch (e) {
         enqueueSnackbar(e.message, {
           variant: 'error',

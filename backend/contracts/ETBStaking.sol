@@ -190,14 +190,16 @@ contract ETBStaking is Ownable {
         return _stakingStages.length;
     }
 
-    function getStackingStage(uint256 stage) external view returns (uint256, uint256, uint256, uint256, uint256) {
+    function getStackingStage(uint256 stage) external view returns (uint256, uint256, uint256, uint256, uint256, uint256, uint256) {
         require(stage < _stakingStages.length, 'ETBStaking: wrong number of stage');
         return (
         _stakingStages[stage]._reward,
         _stakingStages[stage]._startTime,
         _stakingStages[stage]._endTime,
         _stakingStages[stage]._tokens,
-        _stakingStages[stage]._holders
+        _stakingStages[stage]._holders,
+        _stakingStages[stage]._balance,
+        _stakingStages[stage]._rewardPerDay
         );
     }
 
