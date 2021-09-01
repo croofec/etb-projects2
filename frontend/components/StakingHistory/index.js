@@ -2,7 +2,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import StakingHistoryItem from '@components/StakingHistoryItem';
 import { useSupportedNetwork } from '@hooks/chain';
-import { useSnackbar } from 'notistack';
 import { useWeb3React } from '@web3-react/core';
 import { ETBStaking } from '@utils/contracts';
 import { useEffect, useState } from 'react';
@@ -14,7 +13,6 @@ const StakingHistory = () => {
 
   const isSupportedNetwork = useSupportedNetwork();
 
-  const { enqueueSnackbar } = useSnackbar();
   const { chainId, account, active } = useWeb3React();
 
   const stakingContract = ETBStaking(chainId);
@@ -26,14 +24,18 @@ const StakingHistory = () => {
       const stageCount = await stakingContract.methods.getStackingStagesLength().call();
       const results = [];
       for (let i = stageCount; i > 0; i--) {
-        const stake = await stakingContract.methods.getHolderInfo(i - 1, account).call();
-        if (parseInt(stake[1]) > 0) {
-          results.push({
-            stage: i - 1,
-            date: moment.utc(stake[0] * 1000).format('yyyy-MM-DD'),
-            value: Web3.utils.fromWei(String(stake[1]), 'ether'),
-            reward: Web3.utils.fromWei(String(stake[2]), 'ether'),
-          });
+        try {
+          const stake = await stakingContract.methods.getHolderInfo(i - 1, account).call();
+          if (parseInt(stake[1]) > 0) {
+            results.push({
+              stage: i - 1,
+              date: moment.utc(stake[0] * 1000).format('yyyy-MM-DD'),
+              value: Web3.utils.fromWei(String(stake[1]), 'ether'),
+              reward: Web3.utils.fromWei(String(stake[2]), 'ether'),
+            });
+          }
+        } catch (e) {
+
         }
       }
       setStakes(results);

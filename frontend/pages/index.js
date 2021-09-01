@@ -7,6 +7,7 @@ import Staking from '@components/Staking';
 import StakingInfo from '@components/StakingInfo';
 import Header from '@components/Header';
 import UnsupportedChain from '@components/UnsupportedChain';
+import TokenFaucet from '@components/TokenFaucet';
 
 const Index = () => {
   return (<Container maxWidth="xl">
@@ -19,6 +20,7 @@ const Index = () => {
           <UnsupportedChain/>
           <StakingInfo/>
           <Staking/>
+          <TokenFaucet/>
           <StakingHistory/>
         </Container>
       </Box>
