@@ -171,14 +171,14 @@ contract ETBStaking is Ownable {
         //duration of holding
         (,uint256  holderDurationDay) = SafeMath.tryDiv(current - stakeHolder._depositTime, _daySeconds);
         //poolWeight
-        (,uint256  poolWeight) = SafeMath.tryDiv(stakeHolder._amount, _stakingStages[stage]._tokens);
+        (,uint256  poolWeight) = SafeMath.tryDiv(stakeHolder._amount * 100, _stakingStages[stage]._tokens);
 
         //calc rewardPerDay * poolWeight
         (,uint256  rewardRate) = SafeMath.tryMul(_stakingStages[stage]._rewardPerDay, poolWeight);
         //bonus by days
         (,uint256  reward) = SafeMath.tryMul(holderDurationDay, rewardRate);
-
-        return reward;
+        (,uint256  result) = SafeMath.tryDiv(reward, 100);
+        return result;
     }
 
     function isStackingStageIsActive(uint256 stage) external view returns (bool) {

@@ -44,28 +44,25 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    api_keys: {
-      bscscan: process.env.BSC_SCAN_APIKEY
-    },
     development: {
       host: '127.0.0.1',     // Localhost (default: none)
       port: 8545,            // Standard Ethereum port (default: none)
       network_id: '1337',       // Any network (default: none)
-      provider: () => new PrivateKeyProvider(process.env.PRIVATE_KEY, 'http://localhost:8545'),
+      // provider: () => new PrivateKeyProvider(process.env.PRIVATE_KEY, 'http://localhost:8545'),
     },
     testnet: {
       provider: () => new PrivateKeyProvider(process.env.PRIVATE_KEY, `https://data-seed-prebsc-1-s1.binance.org:8545`),
       network_id: 97,
       confirmations: 1,
       timeoutBlocks: 20000,
-      skipDryRun: true
+      skipDryRun: true,
     },
     bsc: {
       provider: () => new PrivateKeyProvider(process.env.PRIVATE_KEY, `https://bsc-dataseed1.binance.org`),
       network_id: 56,
       confirmations: 10,
       timeoutBlocks: 200,
-      skipDryRun: true
+      skipDryRun: true,
     },
     // Another network with more advanced options...
     // advanced: {
@@ -94,6 +91,13 @@ module.exports = {
     // }
   },
 
+  plugins: [
+    'truffle-plugin-verify',
+  ],
+  api_keys: {
+    bscscan: process.env.BSC_SCAN_APIKEY,
+    etherscan: process.env.BSC_SCAN_APIKEY,
+  },
   // Set default mocha options here, use special reporters etc.
   mocha: {
     // timeout: 100000
